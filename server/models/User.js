@@ -25,7 +25,7 @@ const userSchema =new Schema({
     },
     gender:{
        type:String,
-       enum:[male,female,other],
+       enum:["Male","Female","Other"],
        default:male
     },
     role:{
@@ -33,6 +33,7 @@ const userSchema =new Schema({
        enum:['admin','docter','patient'],
        default:petient
     }
+  
 },{
     timestamps:true
 });
