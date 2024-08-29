@@ -5,7 +5,7 @@ import dotenv from "dotenv"
 dotenv.config()
 
 import {getHealth} from "./controllers/health.js"
-import {postSignup} from "./controllers/auth.js"
+import {postSignup ,postLogin} from "./controllers/auth.js"
 
 
 const app = express()
@@ -26,6 +26,7 @@ dbconnection();
 app.get("/health",getHealth)
 
 app.post("/signup",postSignup)
+app.post("/login",postLogin)
   
 
 

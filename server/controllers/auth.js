@@ -1,4 +1,5 @@
  import User from "./../models/User.js"
+ import md5 from "md5";
 
 const postSignup = async (req, res) => {
 
@@ -8,7 +9,8 @@ const postSignup = async (req, res) => {
         email,
         address,
         gender,
-        password } = req.body
+        password
+    } = req.body
 
 
         const isMobileValid = mobile.match(/^[6-9]\d{9}$/);  //regix
@@ -47,7 +49,7 @@ const postSignup = async (req, res) => {
                 email,
                 address,
                 gender,
-                password 
+                password :md5(password)
         })
       try{
         const newUser = await user.save() ;
@@ -64,8 +66,32 @@ const postSignup = async (req, res) => {
             message:err.message
         })
     }
-
 }
 
+const postLogin = async (req,res) => {
 
-export { postSignup } 
+    const {mobile,password} =req.body
+    
+    const user = await User.findOne({
+        mobile,
+        password:md5(password)
+    })
+
+    if(!user){
+        res.status(400).json({
+            success:false,
+            message:`Invalid Credientials`,
+            data:null
+        })
+ }
+
+ else{
+    res.status(200).json({
+        success:true,
+        message:`Login Successful`,
+        data:user
+    })
+ }
+
+}
+export { postSignup,postLogin } 
